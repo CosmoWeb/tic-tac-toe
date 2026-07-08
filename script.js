@@ -19,17 +19,18 @@ const gameBoard = (() => {
 })();
 
 const Player = (name, mark) => {
+    let turnToken;
     const placeMark = (row, column) => {
         let cell = gameBoard.board;
-        if(cell[row][column] === "X" || cell[row][column] === "O" ){
+        if (cell[row][column] === "X" || cell[row][column] === "O") {
             console.log("This spot is already taken. Try another move.");
-        }else{
+        } else {
             cell[row][column] = mark;
             Game.checkGame(mark, name);
         }
-    }
+    };
 
-    return { name, mark, placeMark };
+    return { name, mark, turnToken, placeMark };
 }
 
 const Game = (() => {
@@ -59,6 +60,27 @@ const Game = (() => {
 
 })();
 
+const gameGUI = (() => {
+    const boardGUI = document.querySelector(".board");
+    board = gameBoard.board;
+
+    const displayBoard = ()=>{
+        for (row of board) {
+            for (column of row) {
+                const cell = document.createElement("div");
+                cell.classList.add("cell");
+                boardGUI.appendChild(cell);
+            }
+        }
+    }
+
+    return {displayBoard};
+})();
+
+gameBoard.createBoard();
+gameGUI.displayBoard();
+
+/*
 gameBoard.createBoard();
 const player1 = Player("Jak", "X");
 console.log(player1.name);
@@ -69,4 +91,4 @@ player2.placeMark(0, 0);
 player2.placeMark(1, 1);
 player2.placeMark(1, 1);
 player2.placeMark(2, 2);
-
+*/
