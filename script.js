@@ -3,57 +3,63 @@ const gameBoard = (() => {
     const columns = 3;
     const board = [];
 
-    for(let i = 0; i < rows; i++){
-        board[i] = [];
-        for(let j = 0; j < columns; j++){
-            board[i].push(j);
+    const createBoard = () => {
+        for (let i = 0; i < rows; i++) {
+            board[i] = [];
+            for (let j = 0; j < columns; j++) {
+                board[i].push(j);
+            }
         }
     }
+
 
     const consoleBoard = () => console.log(board);
 
-    return {rows, columns, board, consoleBoard};
+    return { rows, columns, board, createBoard, consoleBoard };
 })();
 
 const Player = (name, mark) => {
-    const score = 0;
-    const placeMark = (mark, i, j) => {
-        gameBoard.board[i][j] = mark;
+    const placeMark = (mark, row, column) => {
+        gameBoard.board[row][column] = mark;
         Game.checkGame(mark, name);
     }
-    const increaseScore = () => score++;
 
-    return {name, mark, score, placeMark, increaseScore};
+    return { name, mark, placeMark };
 }
 
-const Game = (() =>{
-    const round = true;
-
-    const checkGame = (mark, name) =>{
-        while(round === true){
-            if(gameBoard.board[0] === [mark, mark, mark] || gameBoard.board[1] === [mark, mark, mark] || gameBoard.board[2] === [mark, mark, mark]){
-                round = false;
-                
-            }
-            else{
-                break;
-            }
+const Game = (() => {
+    const checkGame = (mark, name) => {
+        const b = gameBoard.board;
+        if (
+            /*Check rows */
+            (b[0][0] === mark && b[0][1] === mark && b[0][2] === mark) ||
+            (b[1][0] === mark && b[1][1] === mark && b[1][2] === mark) ||
+            (b[2][0] === mark && b[2][1] === mark && b[2][2] === mark) ||
+            /*Check colums */
+            (b[0][0] === mark && b[1][0] === mark && b[2][0] === mark) ||
+            (b[0][1] === mark && b[1][1] === mark && b[2][1] === mark) ||
+            (b[0][2] === mark && b[1][2] === mark && b[2][2] === mark) ||
+            /* Diagonal */
+            (b[0][0] === mark && b[1][1] === mark && b[2][2] === mark) ||
+            (b[2][0] === mark && b[1][1] === mark && b[0][2] === mark)
+        ) {
+            console.log(`${name} wins!`);
         }
-        return console.log(`${name} wins.`);
     };
 
-    const restartGame = () => round = true;
+    const restartGame = () => gameBoard.createBoard();
 
-    return {round, checkGame, restartGame};
-    
+    return { checkGame, restartGame };
+
 })();
 
 /*Creating players */
+gameBoard.createBoard();
 const player1 = Player("Jak", "X");
 console.log(player1.name);
 const player2 = Player("Daxter", "O");
 console.log(player2.name);
 gameBoard.consoleBoard();
-player1.placeMark(player1.mark, 0, 0);
-player1.placeMark(player1.mark, 0, 1);
-player1.placeMark(player1.mark, 0, 2);
+player2.placeMark(player2.mark, 0, 0);
+player2.placeMark(player2.mark, 1, 1);
+player2.placeMark(player2.mark, 2, 2);
