@@ -27,6 +27,7 @@ const Player = (name, mark) => {
         } else {
             cell[row][column] = mark;
             Game.checkGame(mark, name);
+            return mark;
         }
     };
 
@@ -63,22 +64,35 @@ const Game = (() => {
 const gameGUI = (() => {
     const boardGUI = document.querySelector(".board");
     board = gameBoard.board;
+    i = 1;
 
     const displayBoard = ()=>{
         for (row of board) {
             for (column of row) {
                 const cell = document.createElement("div");
                 cell.classList.add("cell");
+                cell.setAttribute("id", `cell-${i}`);
+                i++;
                 boardGUI.appendChild(cell);
             }
         }
-    }
+    };
 
-    return {displayBoard};
+    const markSpot = ()=>{
+        boardGUI.addEventListener("click", (event) => {
+            target = event.target;
+            console.log(target.id);
+            
+        });
+
+    };
+
+    return {displayBoard, markSpot};
 })();
 
 gameBoard.createBoard();
 gameGUI.displayBoard();
+gameGUI.markSpot();
 
 /*
 gameBoard.createBoard();
