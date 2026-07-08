@@ -19,7 +19,7 @@ const gameBoard = (() => {
 })();
 
 const Player = (name, mark) => {
-    const placeMark = (mark, row, column) => {
+    const placeMark = (row, column) => {
         gameBoard.board[row][column] = mark;
         Game.checkGame(mark, name);
     }
@@ -39,11 +39,12 @@ const Game = (() => {
             (b[0][0] === mark && b[1][0] === mark && b[2][0] === mark) ||
             (b[0][1] === mark && b[1][1] === mark && b[2][1] === mark) ||
             (b[0][2] === mark && b[1][2] === mark && b[2][2] === mark) ||
-            /* Diagonal */
+            /*Check Diagonals */
             (b[0][0] === mark && b[1][1] === mark && b[2][2] === mark) ||
             (b[2][0] === mark && b[1][1] === mark && b[0][2] === mark)
         ) {
             console.log(`${name} wins!`);
+            gameBoard.consoleBoard();
         }
     };
 
@@ -53,13 +54,13 @@ const Game = (() => {
 
 })();
 
-/*Creating players */
 gameBoard.createBoard();
 const player1 = Player("Jak", "X");
 console.log(player1.name);
 const player2 = Player("Daxter", "O");
 console.log(player2.name);
 gameBoard.consoleBoard();
-player2.placeMark(player2.mark, 0, 0);
-player2.placeMark(player2.mark, 1, 1);
-player2.placeMark(player2.mark, 2, 2);
+player2.placeMark(0, 0);
+player2.placeMark(1, 1);
+player2.placeMark(2, 2);
+
