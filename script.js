@@ -15,7 +15,7 @@ const gameBoard = (() => {
 
     const consoleBoard = () => console.log(board);
 
-    return { rows, columns, board, createBoard, consoleBoard };
+    return { board, createBoard, consoleBoard };
 })();
 
 const Player = (name, mark) => {
@@ -67,11 +67,14 @@ const gameGUI = (() => {
     i = 1;
 
     const displayBoard = ()=>{
+        gameBoard.createBoard();
         for (row of board) {
             for (column of row) {
                 const cell = document.createElement("div");
                 cell.classList.add("cell");
                 cell.setAttribute("id", `cell-${i}`);
+                cell.setAttribute("data-row", `${board.indexOf(row)}`);
+                cell.setAttribute("data-column", `${row.indexOf(column)}`);
                 i++;
                 boardGUI.appendChild(cell);
             }
@@ -90,7 +93,7 @@ const gameGUI = (() => {
     return {displayBoard, markSpot};
 })();
 
-gameBoard.createBoard();
+
 gameGUI.displayBoard();
 gameGUI.markSpot();
 
