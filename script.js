@@ -19,7 +19,7 @@ const gameBoard = (() => {
 })();
 
 const Player = (name, mark) => {
-    let turnToken;
+    let turnToken = true;
     const placeMark = (row, column) => {
         let cell = gameBoard.board;
         if (cell[row][column] === "X" || cell[row][column] === "O") {
@@ -85,6 +85,18 @@ const gameGUI = (() => {
         boardGUI.addEventListener("click", (event) => {
             target = event.target;
             console.log(target.id);
+            console.log(`Row: ${target.dataset.row}; Column : ${target.dataset.column}`);
+            let row = target.dataset.row;
+            let column = target.dataset.column;
+            if(player1.turnToken === true){
+                mark = player1.placeMark(row, column);
+                player1.turnToken = false;
+            }
+            else{
+                mark = player2.placeMark(row, column);
+                player1.turnToken = true;
+            }
+            target.textContent = mark;
             
         });
 
@@ -96,6 +108,8 @@ const gameGUI = (() => {
 
 gameGUI.displayBoard();
 gameGUI.markSpot();
+const player1 = Player("Jak", "X");
+const player2 = Player("Daxter", "O");
 
 /*
 gameBoard.createBoard();
