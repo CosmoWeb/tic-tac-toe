@@ -62,6 +62,7 @@ const Game = (() => {
 })();
 
 const gameGUI = (() => {
+    const main = document.querySelector(".main");
     const boardGUI = document.querySelector(".board");
     board = gameBoard.board;
     i = 1;
@@ -88,7 +89,14 @@ const gameGUI = (() => {
             console.log(`Row: ${target.dataset.row}; Column : ${target.dataset.column}`);
             let row = target.dataset.row;
             let column = target.dataset.column;
-            if(player1.turnToken === true){
+            if(target.textContent === "X" || target.textContent === "O"){
+                const message = "This spot is already taken. Try another one!"
+                const messageContainer = document.createElement("div");
+                messageContainer.classList.add("message");
+                messageContainer.textContent = message;
+                main.appendChild(messageContainer);
+            }
+            else if(player1.turnToken === true){
                 mark = player1.placeMark(row, column);
                 player1.turnToken = false;
             }
