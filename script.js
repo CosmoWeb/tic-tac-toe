@@ -20,8 +20,13 @@ const gameBoard = (() => {
 
 const Player = (name, mark) => {
     const placeMark = (row, column) => {
-        gameBoard.board[row][column] = mark;
-        Game.checkGame(mark, name);
+        let cell = gameBoard.board;
+        if(cell[row][column] === "X" || cell[row][column] === "O" ){
+            console.log("This spot is already taken. Try another move.");
+        }else{
+            cell[row][column] = mark;
+            Game.checkGame(mark, name);
+        }
     }
 
     return { name, mark, placeMark };
@@ -61,6 +66,7 @@ const player2 = Player("Daxter", "O");
 console.log(player2.name);
 gameBoard.consoleBoard();
 player2.placeMark(0, 0);
+player2.placeMark(1, 1);
 player2.placeMark(1, 1);
 player2.placeMark(2, 2);
 
