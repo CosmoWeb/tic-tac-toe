@@ -12,8 +12,34 @@
 <body>
     <div class="container">
         <div class="header"></div>
+        <div class="sidebar">
+            <div class="player-creation">
+                <form action="">
+
+                    <fieldset>
+                        <legend>Choose player 1 name</legend>
+                        <div><label for="player1">Name: </label>
+                            <input type="text" name="player1" id="player1">
+                            <input type="hidden" id="X" name="X" value="X">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Choose player 2 name</legend>
+                        <div>
+                            <label for="player2">Name: </label>
+                            <input type="text" name="player2" id="player2">
+                            <input type="hidden" name="O" id="O" value="O">
+                        </div>
+                    </fieldset>
+                    <button type="submit" class="btn-sub">Submit</button>
+                </form>
+            </div>
+        </div>
         <div class="main">
             <div class="board"></div>
+            <div id="result"></div>
+            <button class="btn-start">Start Game</button>
+            <button class="btn-restart">Restart</button>
         </div>
         <div class="footer"></div>
     </div>

@@ -47,15 +47,51 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 /*My CSS */
+
+.container{
+  display: grid;
+  grid-template: 2fr 4fr 1fr / 1fr 3fr;
+  grid-template-areas: "header header" "sidebar main" "footer footer";
+}
+
+.header{
+  grid-area: header;
+}
+
+.main{
+  display: flex;
+  flex-direction: column;
+  grid-area: main;
+  align-items: center;
+}
+
+.sidebar{
+  grid-area: sidebar;
+}
+
+.footer{
+  grid-area: footer;
+}
+
 .board{
-    display: grid;
-    grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
-    height: 300px;
-    width: 300px;
+  display: grid;
+  grid-template: 1fr 1fr 1fr / 1fr 1fr 1fr;
+  height: 27rem;
+  width: 27rem;
 }
 
 .cell{
-    height: 100px;
-    width: 100px;
-    border: 1px, solid, black;
+  height: 9rem;
+  width: 9rem;
+  border: 1px, solid, black;
+  text-align: center;
+    
+}
+
+.btn-start, .btn-restart, .btn-sub{
+
+}
+
+.btn-sub{
+
 }
