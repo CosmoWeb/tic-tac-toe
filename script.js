@@ -12,10 +12,7 @@ const gameBoard = (() => {
         }
     }
 
-
-    const consoleBoard = () => console.log(board);
-
-    return { board, createBoard, consoleBoard };
+    return { board, createBoard};
 })();
 
 const Player = (name, mark) => {
@@ -52,7 +49,7 @@ const Game = (() => {
             (b[2][0] === mark && b[1][1] === mark && b[0][2] === mark)
         ) {
             console.log(`${name} wins!`);
-            gameBoard.consoleBoard();
+            gameGUI.showResult(name);
             gameGUI.cleanBoard();
         }
 
@@ -119,6 +116,15 @@ const gameGUI = (() => {
         gameGUI.displayBoard();
     };
 
+    const startGame = () => {
+        playerFrom = document.querySelector(".player-creation");
+        start = document.querySelector(".btn-start");
+        start.addEventListener("click", () => {
+            playerFrom.removeAttribute("hidden");
+            gameGUI.createPlayer;
+        });
+    };
+
     const createPlayer = () => {
         const sub = document.querySelector(".btn-sub");
         sub.addEventListener("click", event => {
@@ -130,16 +136,20 @@ const gameGUI = (() => {
             const player1 = Player(player1Name, mark1);
             const player2 = Player(player2Name, mark2);
             gameGUI.markSpot(player1, player2);
-            console.log(player1.mark, player2.mark);
         });
     };
 
-return {displayBoard, markSpot, cleanBoard, createPlayer};
+    const showResult = (winner) => {
+        const result = document.querySelector("#result");
+        result.textContent = `${winner} wins!`;
+    };
+
+return {displayBoard, markSpot, cleanBoard, startGame, createPlayer, showResult};
 }) ();
 
 
 gameGUI.displayBoard();
-gameGUI.createPlayer();
+gameGUI.startGame();
 
 
 
@@ -147,9 +157,7 @@ gameGUI.createPlayer();
 *Alla fine della partita, prevenire il comporatmento dell'event listener per far smettere al giocatore di premere e mostrare un tasto che propone di iniziare un nuovo round che ha un event listener
 che richiama la funzione cleanBoard.
 
-*Mostrare a schermo il nome del giocatore che sta giocando.
-
-*Far iniziare il gioco con la possibilità di inserire il nome dei giocatori.
+Il bottone Start Game deve richiamare createPlayer e fare apparire il form
 
 *Miglioare l'aspetto grafico per renderlo più dinamico
 */
