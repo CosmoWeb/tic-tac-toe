@@ -48,16 +48,13 @@ const Game = (() => {
             (b[0][0] === mark && b[1][1] === mark && b[2][2] === mark) ||
             (b[2][0] === mark && b[1][1] === mark && b[0][2] === mark)
         ) {
-            console.log(`${name} wins!`);
             gameGUI.showResult(name);
-            gameGUI.cleanBoard();
+            gameGUI.restartGame();
         }
 
     };
 
-    const restartGame = () => gameBoard.createBoard();
-
-    return {checkGame, restartGame };
+    return {checkGame};
 
 })();
 
@@ -83,7 +80,7 @@ const gameGUI = (() => {
     };
 
     const markSpot = (player1, player2) => {
-        boardGUI.addEventListener("click", (event) => {
+        boardGUI.addEventListener("click",(event)=>{
             target = event.target;
             console.log(target.id);
             console.log(`Row: ${target.dataset.row}; Column : ${target.dataset.column}`);
@@ -106,6 +103,7 @@ const gameGUI = (() => {
                 player1.turnToken = true;
             }
             target.textContent = mark;
+            
         });    
     }  
 
@@ -117,18 +115,28 @@ const gameGUI = (() => {
     };
 
     const startGame = () => {
-        playerFrom = document.querySelector(".player-creation");
+        const playerForm = document.querySelector(".player-creation");
         start = document.querySelector(".btn-start");
         start.addEventListener("click", () => {
-            playerFrom.removeAttribute("hidden");
-            gameGUI.createPlayer;
+            playerForm.removeAttribute("hidden");
+            gameGUI.createPlayer();
+            start.setAttribute("hidden", "hidden");
         });
+    };
+
+    const restartGame = () => {
+        const restart = document.querySelector(".btn-restart");
+        restart.addEventListener("click", gameGUI.cleanBoard());
+        restart.removeAttribute("hidden");
+        
     };
 
     const createPlayer = () => {
         const sub = document.querySelector(".btn-sub");
+        playerForm = document.querySelector(".player-creation");
         sub.addEventListener("click", event => {
             event.preventDefault();
+            playerForm.setAttribute("hidden", "hidden");
             const player1Name = document.getElementById("player1").value;
             const mark1 = document.getElementById("X").value;
             const player2Name = document.getElementById("player2").value;
@@ -144,20 +152,9 @@ const gameGUI = (() => {
         result.textContent = `${winner} wins!`;
     };
 
-return {displayBoard, markSpot, cleanBoard, startGame, createPlayer, showResult};
+return {displayBoard, markSpot, cleanBoard, startGame, restartGame, createPlayer, showResult};
 }) ();
 
 
 gameGUI.displayBoard();
 gameGUI.startGame();
-
-
-
-/*Notes
-*Alla fine della partita, prevenire il comporatmento dell'event listener per far smettere al giocatore di premere e mostrare un tasto che propone di iniziare un nuovo round che ha un event listener
-che richiama la funzione cleanBoard.
-
-Il bottone Start Game deve richiamare createPlayer e fare apparire il form
-
-*Miglioare l'aspetto grafico per renderlo più dinamico
-*/
