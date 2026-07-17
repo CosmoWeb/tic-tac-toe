@@ -86,21 +86,21 @@ const gameGUI = (() => {
             console.log(`Row: ${target.dataset.row}; Column : ${target.dataset.column}`);
             let row = target.dataset.row;
             let column = target.dataset.column;
+            const message = "This spot is already taken. Try another one!"
+            const messageContainer = document.querySelector("#message");
 
             if (target.textContent === "X" || target.textContent === "O") {
-                const message = "This spot is already taken. Try another one!"
-                const messageContainer = document.createElement("div");
-                messageContainer.classList.add("message");
                 messageContainer.textContent = message;
-                main.appendChild(messageContainer);
             }
             else if (player1.turnToken === true) {
                 mark = player1.placeMark(row, column);
                 player1.turnToken = false;
+                messageContainer.textContent = "";
             }
             else {
                 mark = player2.placeMark(row, column);
                 player1.turnToken = true;
+                messageContainer.textContent = "";
             }
             target.textContent = mark;
             
@@ -114,15 +114,6 @@ const gameGUI = (() => {
         gameGUI.displayBoard();
     };
 
-    const startGame = () => {
-        const playerForm = document.querySelector(".player-creation");
-        start = document.querySelector(".btn-start");
-        start.addEventListener("click", () => {
-            playerForm.removeAttribute("hidden");
-            gameGUI.createPlayer();
-            start.setAttribute("hidden", "hidden");
-        });
-    };
 
     const restartGame = () => {
         const restart = document.querySelector(".btn-restart");
@@ -148,13 +139,13 @@ const gameGUI = (() => {
     };
 
     const showResult = (winner) => {
-        const result = document.querySelector("#result");
+        const result = document.querySelector("#message");
         result.textContent = `${winner} wins!`;
     };
 
-return {displayBoard, markSpot, cleanBoard, startGame, restartGame, createPlayer, showResult};
+return {displayBoard, markSpot, cleanBoard, restartGame, createPlayer, showResult};
 }) ();
 
 
 gameGUI.displayBoard();
-gameGUI.startGame();
+gameGUI.createPlayer();
